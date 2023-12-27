@@ -25,7 +25,7 @@ public class Clicky {
         String[] files = new String[]{"settings.conf", "player-storage.conf"};
         configManager = new BasicConfigManager(files, dir, Clicky.class, MOD_NAME, MOD_ID, logger);
         configManager.init();
-        ConfigGetters.load();
+        ConfigGetters.updateConfigThenLoad();
 
     }
 

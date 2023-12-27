@@ -51,19 +51,19 @@ public class EggMenu {
     private static Button getEggButton (ServerPlayerEntity player, PlayerPartyStorage storage, GooeyPage page) {
 
         ItemStack egg = new ItemStack(Items.EGG);
-        egg.setDisplayName(FancyText.getFormattedText("&eCurrent Clicks: &c" + AccountHandler.getEggClicks(player)));
+        egg.setDisplayName(FancyText.getFormattedText("&eCurrent Clicks: &c" + AccountHandler.getClicks(player, "Egg")));
         return GooeyButton.builder()
                 .display(egg)
                 .onClick(() -> {
 
-                    AccountHandler.updateEggClicks(player);
-                    if (AccountHandler.getEggClicks(player) >= ConfigGetters.eggClicks) {
+                    AccountHandler.updateClicks(player, "Egg");
+                    if (AccountHandler.getClicks(player, "Egg") >= ConfigGetters.eggClicks) {
 
                         List<Pokemon> pool = new ArrayList<>(PokemonPool.pool);
                         Pokemon pokemon = RandomHelper.getRandomElementFromList(pool);
                         pokemon.makeEgg();
                         storage.add(pokemon);
-                        AccountHandler.decreaseEggClicks(player);
+                        AccountHandler.resetClicks(player, "Egg");
                         player.sendMessage(FancyText.getFormattedText("&eYou received a random egg!"), player.getUniqueID());
 
                     }

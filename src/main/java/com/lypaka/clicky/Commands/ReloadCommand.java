@@ -2,6 +2,7 @@ package com.lypaka.clicky.Commands;
 
 import com.lypaka.clicky.Clicky;
 import com.lypaka.clicky.ConfigGetters;
+import com.lypaka.clicky.Utils.PokemonPool;
 import com.lypaka.lypakautils.FancyText;
 import com.lypaka.lypakautils.MiscHandlers.PermissionHandler;
 import com.mojang.brigadier.CommandDispatcher;
@@ -36,8 +37,9 @@ public class ReloadCommand {
 
                                                 try {
 
-                                                    ConfigGetters.load();
+                                                    ConfigGetters.updateConfigThenLoad();
                                                     Clicky.configManager.load();
+                                                    PokemonPool.load();
                                                     c.getSource().sendFeedback(FancyText.getFormattedText("&aSuccessfully reloaded Clicky configuration!"), true);
 
                                                 } catch (ObjectMappingException e) {

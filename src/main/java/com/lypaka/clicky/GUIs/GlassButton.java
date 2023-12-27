@@ -3,7 +3,6 @@ package com.lypaka.clicky.GUIs;
 import ca.landonjw.gooeylibs2.api.button.Button;
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import com.lypaka.lypakautils.MiscHandlers.ItemStackBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GlassButton {

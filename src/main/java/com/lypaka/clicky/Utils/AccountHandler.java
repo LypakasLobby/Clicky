@@ -8,59 +8,15 @@ import java.util.Map;
 
 public class AccountHandler {
 
-    public static void updateEggClicks (ServerPlayerEntity player) {
-
-        Map<String, Integer> clicks = new HashMap<>();
-        if (ConfigGetters.playerStorage.containsKey(player.getUniqueID().toString())) {
-
-            clicks = ConfigGetters.playerStorage.get(player.getUniqueID().toString());
-
-        }
-
-        int eggClicks = 0;
-        if (clicks.containsKey("Egg")) {
-
-            eggClicks = clicks.get("Egg");
-
-        }
-
-        int updated = eggClicks + 1;
-        clicks.put("Egg", updated);
-        ConfigGetters.playerStorage.put(player.getUniqueID().toString(), clicks);
-
-    }
-
-    public static void updateMoneyClicks (ServerPlayerEntity player) {
-
-        Map<String, Integer> clicks = new HashMap<>();
-        if (ConfigGetters.playerStorage.containsKey(player.getUniqueID().toString())) {
-
-            clicks = ConfigGetters.playerStorage.get(player.getUniqueID().toString());
-
-        }
-
-        int moneyClicks = 0;
-        if (clicks.containsKey("Money")) {
-
-            moneyClicks = clicks.get("Money");
-
-        }
-
-        int updated = moneyClicks + 1;
-        clicks.put("Money", updated);
-        ConfigGetters.playerStorage.put(player.getUniqueID().toString(), clicks);
-
-    }
-
-    public static int getEggClicks (ServerPlayerEntity player) {
+    public static int getClicks (ServerPlayerEntity player, String type) {
 
         int clicks = 0;
         if (ConfigGetters.playerStorage.containsKey(player.getUniqueID().toString())) {
 
-            Map<String, Integer> clickMap = ConfigGetters.playerStorage.get(player.getUniqueID().toString());
-            if (clickMap.containsKey("Egg")) {
+            Map<String, Integer> map = ConfigGetters.playerStorage.get(player.getUniqueID().toString());
+            if (map.containsKey(type)) {
 
-                clicks = clickMap.get("Egg");
+                clicks = map.get(type);
 
             }
 
@@ -70,30 +26,23 @@ public class AccountHandler {
 
     }
 
-    public static void decreaseEggClicks (ServerPlayerEntity player) {
+    public static void updateClicks (ServerPlayerEntity player, String type) {
 
-        Map<String, Integer> map = ConfigGetters.playerStorage.get(player.getUniqueID().toString());
-        int current = map.get("Egg");
-        int updated = current - ConfigGetters.eggClicks;
-        map.put("Egg", updated);
+        Map<String, Integer> clickMap = new HashMap<>();
+        if (ConfigGetters.playerStorage.containsKey(player.getUniqueID().toString())) {
+
+            clickMap = ConfigGetters.playerStorage.get(player.getUniqueID().toString());
+        }
+        int clicks = clickMap.getOrDefault(type, 0);
+        int updated = clicks + 1;
+        clickMap.put(type, updated);
+        ConfigGetters.playerStorage.put(player.getUniqueID().toString(), clickMap);
 
     }
 
-    public static int getMoneyClicks (ServerPlayerEntity player) {
+    public static void resetClicks (ServerPlayerEntity player, String type) {
 
-        int clicks = 0;
-        if (ConfigGetters.playerStorage.containsKey(player.getUniqueID().toString())) {
-
-            Map<String, Integer> clickMap = ConfigGetters.playerStorage.get(player.getUniqueID().toString());
-            if (clickMap.containsKey("Money")) {
-
-                clicks = clickMap.get("Money");
-
-            }
-
-        }
-
-        return clicks;
+        ConfigGetters.playerStorage.get(player.getUniqueID().toString()).entrySet().removeIf(e -> e.getKey().equalsIgnoreCase(type));
 
     }
 

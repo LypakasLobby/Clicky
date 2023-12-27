@@ -9,8 +9,6 @@ import com.lypaka.clicky.ConfigGetters;
 import com.lypaka.clicky.Utils.AccountHandler;
 import com.lypaka.lypakautils.FancyText;
 import com.lypaka.lypakautils.MiscHandlers.LogicalPixelmonMoneyHandler;
-import com.pixelmonmod.pixelmon.api.storage.PlayerPartyStorage;
-import com.pixelmonmod.pixelmon.api.storage.StorageProxy;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -37,23 +35,22 @@ public class MoneyMenu {
 
         }
 
-        PlayerPartyStorage storage = StorageProxy.getParty(player);
-        page.getTemplate().getSlot(clickButton).setButton(getMoneyButton(player, storage, page));
+        page.getTemplate().getSlot(clickButton).setButton(getMoneyButton(player, page));
         UIManager.openUIForcefully(player, page);
 
     }
 
-    private static Button getMoneyButton (ServerPlayerEntity player, PlayerPartyStorage storage, GooeyPage page) {
+    private static Button getMoneyButton (ServerPlayerEntity player, GooeyPage page) {
 
         ItemStack coins = new ItemStack(Items.GOLD_NUGGET);
-        coins.setDisplayName(FancyText.getFormattedText("&eCurrent Clicks: &c" + AccountHandler.getMoneyClicks(player)));
+        coins.setDisplayName(FancyText.getFormattedText("&eCurrent Clicks: &c" + AccountHandler.getClicks(player, "Money")));
         return GooeyButton.builder()
                 .display(coins)
                 .onClick(() -> {
 
                     LogicalPixelmonMoneyHandler.add(player.getUniqueID(), ConfigGetters.moneyClicks);
-                    AccountHandler.updateMoneyClicks(player);
-                    page.getTemplate().getSlot(13).setButton(getMoneyButton(player, storage, page));
+                    AccountHandler.updateClicks(player, "Money");
+                    page.getTemplate().getSlot(13).setButton(getMoneyButton(player, page));
 
                 })
                 .build();

@@ -1,9 +1,11 @@
 package com.lypaka.clicky.Utils;
 
+import com.lypaka.clicky.ConfigGetters;
 import com.pixelmonmod.pixelmon.api.pokemon.Pokemon;
 import com.pixelmonmod.pixelmon.api.pokemon.PokemonBuilder;
 import com.pixelmonmod.pixelmon.api.pokemon.species.Species;
 import com.pixelmonmod.pixelmon.api.registries.PixelmonSpecies;
+import com.pixelmonmod.pixelmon.api.util.helpers.RandomHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,36 @@ public class PokemonPool {
                     pool.add(pokemon);
 
                 }
+
+            }
+
+        }
+        if (RandomHelper.getRandomChance(ConfigGetters.legendaryChance)) {
+
+            for (int dex : PixelmonSpecies.getLegendaries(true)) {
+
+                Pokemon pokemon = PokemonBuilder.builder().species(dex).level(1).build();
+                pool.add(pokemon);
+
+            }
+
+        }
+        if (RandomHelper.getRandomChance(ConfigGetters.mythicalChance)) {
+
+            for (int dex : PixelmonSpecies.getMythicals()) {
+
+                Pokemon pokemon = PokemonBuilder.builder().species(dex).level(1).build();
+                pool.add(pokemon);
+
+            }
+
+        }
+        if (RandomHelper.getRandomChance(ConfigGetters.ubChance)) {
+
+            for (int dex : PixelmonSpecies.getUltraBeasts()) {
+
+                Pokemon pokemon = PokemonBuilder.builder().species(dex).level(1).build();
+                pool.add(pokemon);
 
             }
 
